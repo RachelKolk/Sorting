@@ -1,44 +1,40 @@
 # TO-DO: complete the helpe function below to merge 2 sorted arrays
-def merge( arrA, arrB ):
-    elements = len( arrA ) + len( arrB )
-    merged_arr = []
+def merge( arrL, arrR ):
+    elements = len( arrL ) + len( arrR )
+    merged_arr = [0] * elements
     # TO-DO
-    print("Merging ", arrA, " and ", arrB)
-    for i in arrA:
-        for x in arrB:
-            if i > x:
-                merged_arr.append(x)
-                merged_arr.append(i)
-            else:
-                merged_arr.append(i)
-                merged_arr.append(x)                
+    # need these so that the index range doesn't error
+    arrL.append(99999999)
+    arrR.append(99999999)
+    l = 0
+    r = 0
+    for i in range(0, elements):
+        if arrL[l] <= arrR[r]:
+            merged_arr[i] = arrL[l]
+            l += 1
+        else:
+            merged_arr[i] = arrR[r]
+            r += 1
+    print(merged_arr)                
     return merged_arr
 
 
 # TO-DO: implement the Merge Sort function below USING RECURSION
 def merge_sort( arr ):
     # TO-DO
+
     if len(arr) > 1:
         # 1. While your data set contains more than one item, split it in half
         #divide arr into half recursively
         print("Splitting array - length is " + str(len(arr)))
         print("Slice", arr[0:int(len(arr)//2)])
-        left = merge_sort(arr[0:int(len(arr)//2)])
         print("Slice", arr[int(len(arr)//2):])
+        left = merge_sort(arr[0:int(len(arr)//2)])
+        
         right = merge_sort(arr[int(len(arr)//2):])
-        print("Left:", left)
-        print("Right:", right)
-       
-    # conquer using merge helper function
-    if len(arr) == 1:
-        return arr
-    if right != None:
-        if len(left) == len(right):
-            arr = merge(left, right)
-            return arr
-    else:
-        return left
-
+        arr = merge(left, right)
+    return arr
+      
 
 # STRETCH: implement an in-place merge sort algorithm
 def merge_in_place(arr, start, mid, end):
